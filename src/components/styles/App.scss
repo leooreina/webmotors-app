@@ -1,0 +1,36 @@
+// medias
+$mobile-width: 320px;
+$desktop-width: 1024px;
+
+// colors
+$grey: #f2f3f5;
+$font: sans-serif;
+
+@mixin mobile {
+  @media (min-width: 0px) and (max-width: #{$desktop-width}) {@content;}
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width + 1px}) {@content;}
+}
+
+@mixin body {
+    text-align: left;
+    background-color: $grey;
+}
+
+@mixin logoWebMotors {
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+@include mobile() {
+    body {@include body}
+    .logo-webmotors {@include logoWebMotors}
+}
+
+@include desktop() {
+    body {@include body}
+    .logo-webmotors {@include logoWebMotors}
+}
+  
