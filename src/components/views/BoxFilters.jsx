@@ -5,6 +5,25 @@ import { NavLink } from 'react-router-dom';
 
 export default class BoxFilters extends Component {
 
+    state = {
+        make: []
+    }
+
+    componentDidMount() {
+        this.saveDataMake();
+    }
+
+    saveDataMake() {
+        fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make')
+            .then((response) => {
+                if (response.ok) 
+                    response.json().then(make => this.setState({ make }))
+                else 
+                    console.log('Network response was not ok.')
+            })
+            .catch(error => console.log(error))
+    }
+
     render() {
         return (
             <div>
