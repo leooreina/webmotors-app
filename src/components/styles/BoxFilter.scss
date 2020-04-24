@@ -1,0 +1,68 @@
+// medias
+$mobile-width: 320px;
+$maximum-width: 933px;
+
+// colors
+$grey: #f2f3f5;
+$font: sans-serif;
+
+@mixin mobile {
+  @media (min-width: 0px) and (max-width: #{$maximum-width}) {@content;}
+}
+
+@mixin desktop {
+  @media (min-width: #{$maximum-width + 1px}) {@content;}
+}
+
+@mixin tabs {
+    width: 100%;
+}
+
+@mixin venderMeuCarro {
+    margin-left: 80%;
+}
+
+@mixin box {
+    background-color: white;
+    height: 312px;
+    max-width: $maximum-width;
+}
+
+@mixin boxMobile {
+    @include box();
+    margin: 10px;
+}
+
+@mixin boxDesktop {
+    @include box();
+    margin: 10px 15% 10px 15%;
+}
+
+@mixin grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+@mixin row {
+    @include grid;
+    padding: 15px;
+}
+
+@mixin groupForm {
+    @include grid;
+}
+
+@include mobile() {
+    .vender-meu-carro {@include venderMeuCarro()};
+    .box {@include boxMobile};
+    .row {@include row};
+    .group-form {@include groupForm};
+}
+
+@include desktop() {
+    .vender-meu-carro {@include venderMeuCarro()};
+    .box {@include boxDesktop};
+    .row {@include row};
+    .group-form {@include groupForm};
+}
+  

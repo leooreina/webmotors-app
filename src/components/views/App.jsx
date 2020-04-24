@@ -10,6 +10,7 @@ function App() {
         className="logo-webmotors" 
         src={webmotorsLogo} 
         width="240"
+        alt="webmotors logo"
       />
       <BoxFilters/>
     </div>
