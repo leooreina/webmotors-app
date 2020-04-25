@@ -6,22 +6,31 @@ import { NavLink } from 'react-router-dom';
 export default class BoxFilters extends Component {
 
     state = {
-        make: []
+        initialRequests: [
+            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
+            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
+            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=1',
+            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1'
+        ],
+        dataAPI: []
     }
 
     componentDidMount() {
-        this.saveDataMake();
+        this.getRequest();
     }
 
-    saveDataMake() {
-        fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make')
-            .then((response) => {
-                if (response.ok) 
-                    response.json().then(make => this.setState({ make }))
-                else 
-                    console.log('Network response was not ok.')
-            })
-            .catch(error => console.log(error))
+    getRequest() {
+        this.state.initialRequests.map(request => {
+            fetch(request)
+                .then((res) => {
+                    if (res.ok) {
+                        res.json().then(response => this.state.dataAPI.push(response));
+                    }
+                    else console.log('Bad request, please try again.');
+                })
+                .catch(error => console.log(error));
+            }
+        )
     }
 
     render() {
@@ -42,7 +51,7 @@ export default class BoxFilters extends Component {
                 <div className="box">
 
                     <div className="first-row">
-                        <form>
+                        <form className="form-first-row">
                             <label htmlFor="novos">
                                 Novos
                                 <input 
@@ -62,9 +71,9 @@ export default class BoxFilters extends Component {
 
                     <div className="row">
                         <div>
-                            <form>
-                                <input type="text" name="localizacao" placeholder="Onde:"/>
-                                <span>Raio: </span>
+                            <form className="forms">
+                                <input className="localizacao" type="text" name="localizacao" placeholder="Onde:"/>
+                                <span className="raio">Raio: </span>
                                 <select name="raio" defaultValue="100">
                                     <option value="10">10km</option>
                                     <option value="20">20km</option>
@@ -76,14 +85,17 @@ export default class BoxFilters extends Component {
                             </form>
                         </div>
                         <div className="group-form">
-                            <form>
+                            <form className="forms">
                                 <span>Marca: </span>
                                 <select name="marca">
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                    {
+                                        this.state.dataAPI ? this.state.dataAPI.map(make => (
+                                            <option value={make.ID}>{make.Name}</option>
+                                        )) : null
+                                    }
                                 </select>
                             </form>
-                            <form>
+                            <form className="forms">
                                 <span>Modelo: </span>
                                 <select name="modelo">
                                     <option value=""></option>
@@ -95,14 +107,14 @@ export default class BoxFilters extends Component {
 
                     <div className="row">
                         <div className="group-form">
-                            <form>
+                            <form className="forms">
                                 <span>Ano Desejado</span>
                                 <select name="ano">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
                             </form>
-                            <form>
+                            <form className="forms">
                                 <span>Faixa de preço</span>
                                 <select name="preço">
                                     <option value=""></option>
@@ -111,7 +123,7 @@ export default class BoxFilters extends Component {
                             </form>
                         </div>
                         <div>
-                            <form>
+                            <form className="forms">
                                 <span>Versão: </span>
                                 <select name="versao">
                                     <option value=""></option>

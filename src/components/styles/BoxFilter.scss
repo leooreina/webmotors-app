@@ -35,21 +35,52 @@ $font: sans-serif;
 
 @mixin boxDesktop {
     @include box();
-    margin: 10px 15% 10px 15%;
+    margin: 10px 5% 10px 5%;
 }
 
 @mixin grid {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 47.5% 47.5%;
 }
 
 @mixin row {
     @include grid;
     padding: 15px;
+    column-gap: 5%;
 }
 
 @mixin groupForm {
     @include grid;
+    column-gap: 5%;
+}
+
+@mixin firstRow {
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+@mixin formFirstRow {
+    padding: 10px;
+}
+
+@mixin form {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bababa;
+    padding: 10px;
+}
+
+@mixin localizacao {
+    border-style: none;
+}
+
+@mixin raio {
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    padding: 10px;
+    border-left-color: #bababa;
+    border-top-color: #bababa;
 }
 
 @include mobile() {
@@ -57,6 +88,11 @@ $font: sans-serif;
     .box {@include boxMobile};
     .row {@include row};
     .group-form {@include groupForm};
+    .first-row {@include firstRow()};
+    .forms {@include form};
+    .form-first-row {@include formFirstRow()}
+    .localizacao {@include localizacao()};
+    .raio {@include raio};
 }
 
 @include desktop() {
@@ -64,5 +100,10 @@ $font: sans-serif;
     .box {@include boxDesktop};
     .row {@include row};
     .group-form {@include groupForm};
+    .first-row {@include firstRow()};
+    .forms {@include form};
+    .form-first-row {@include formFirstRow()};
+    .localizacao {@include localizacao()};
+    .raio {@include raio};
 }
   
