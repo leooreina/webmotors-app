@@ -35,18 +35,21 @@ export default class BoxFilters extends Component {
 
     render() {
         return (
-            <div>
-                <div className="tabs">
-                    {
-                        tabs.map(tabs => (
-                            <NavLink to={tabs.url}>
-                                <div>{tabs.icon}</div>
-                                <div>{tabs.name}</div>
-                            </NavLink>
-                        ))
-                    }
-
-                    <button className="vender-meu-carro">Vender meu carro</button>
+            <div className="page">
+                <div className="header">
+                    <div className="tabs">
+                        {
+                            tabs.map(tabs => (
+                                <NavLink to={tabs.url}>
+                                    <div>{tabs.icon}</div>
+                                    <div>{tabs.name}</div>
+                                </NavLink>
+                            ))
+                        }
+                    </div>
+                    <div>
+                        <button className="vender-meu-carro">Vender meu carro</button>
+                    </div>
                 </div>
                 <div className="box">
 
@@ -70,10 +73,13 @@ export default class BoxFilters extends Component {
                     </div>
 
                     <div className="row">
-                        <div>
+                        <div className="group-form-localizacao">
+                            <form className="form-input">
+                                <label className="label" htmlFor="localizacao">Onde: </label>
+                                <input className="localizacao" type="text" name="localizacao"/>
+                            </form>
                             <form className="forms">
-                                <input className="localizacao" type="text" name="localizacao" placeholder="Onde:"/>
-                                <span className="raio">Raio: </span>
+                                <label className="label" htmlFor="raio">Raio: </label>
                                 <select name="raio" defaultValue="100">
                                     <option value="10">10km</option>
                                     <option value="20">20km</option>
@@ -86,7 +92,7 @@ export default class BoxFilters extends Component {
                         </div>
                         <div className="group-form">
                             <form className="forms">
-                                <span>Marca: </span>
+                                <label className="label" htmlFor="marca">Marca: </label>
                                 <select name="marca">
                                     {
                                         this.state.dataAPI ? this.state.dataAPI.map(make => (
@@ -96,7 +102,7 @@ export default class BoxFilters extends Component {
                                 </select>
                             </form>
                             <form className="forms">
-                                <span>Modelo: </span>
+                                <label className="label" htmlFor="modelo">Modelo: </label >
                                 <select name="modelo">
                                     <option value=""></option>
                                     <option value=""></option>
@@ -108,15 +114,15 @@ export default class BoxFilters extends Component {
                     <div className="row">
                         <div className="group-form">
                             <form className="forms">
-                                <span>Ano Desejado</span>
+                                <label className="label" htmlFor="ano">Ano Desejado: </label>
                                 <select name="ano">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
                             </form>
                             <form className="forms">
-                                <span>Faixa de preço</span>
-                                <select name="preço">
+                                <label className="label" htmlFor="preco">Faixa de preço: </label>
+                                <select name="preco">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
@@ -124,7 +130,7 @@ export default class BoxFilters extends Component {
                         </div>
                         <div>
                             <form className="forms">
-                                <span>Versão: </span>
+                                <label className="label" htmlFor="versao">Versão: </label>
                                 <select name="versao">
                                     <option value=""></option>
                                     <option value=""></option>
@@ -160,10 +166,10 @@ export default class BoxFilters extends Component {
                                 
                             </div>
                         </div>
-                        <div className="row">
-                            <div>Limpar Filtros</div>
+                        <div>
                             <div>
-                                <button>VER OFERTAS</button>
+                                <span className="botao-limpar-filtros">Limpar Filtros</span>
+                                <button className="botao-ofertas">VER OFERTAS</button>
                             </div>
                         </div>
                     </div>
