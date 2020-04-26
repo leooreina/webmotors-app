@@ -1,12 +1,12 @@
 export const tabs = [
     {
-        name: 'COMPRAR CARROS',
-        icon: '',
+        name: 'CARROS',
+        icon: 'fas fa-car',
         url: '/carros'
     },
     {
-        name: 'COMPRAR MOTOS',
-        icon: '',
+        name: 'MOTOS',
+        icon: 'fas fa-motorcycle',
         url: '/motos'
     }
 ]

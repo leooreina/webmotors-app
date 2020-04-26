@@ -14,9 +14,49 @@ $colorBotaoVenda: #f7a500;
   @media (min-width: #{$maximum-width + 1px}) {@content;}
 }
 
+@mixin hoversBorderTab {
+    &:hover {
+        color: rgb(199, 24, 24);
+        cursor: pointer;
+        border: solid;
+        border-width: 3px;
+        border-color: #f2f3f5;
+        border-bottom-color: rgb(199, 24, 24);
+    }
+}
+
+@mixin hoversTab {
+    &:hover {
+        color: rgb(199, 24, 24);
+        cursor: pointer;
+    }
+}
+
 @mixin tabs {
-    width: 100%;
+    display: grid;
+    grid-template-columns: 180px 180px;
+    width: 50%;
     max-width: $maximum-width;
+}
+
+
+@mixin icon {
+    text-align: center;
+    color: $fontColor;
+    font-size: 24px;
+    padding-top: 10px;
+    @include hoversTab();
+}
+
+@mixin tab {
+    display: grid;
+    grid-template-columns: 90px 90px;
+    @include hoversBorderTab();
+}
+
+@mixin botaoVender {
+    text-align: right;
+    padding-bottom: 15px;
 }
 
 @mixin venderMeuCarro {
@@ -30,12 +70,20 @@ $colorBotaoVenda: #f7a500;
     padding: 8px;
     width: 150px;
     border-radius: 2px;
+    &:hover {
+        background-color: $colorBotaoVenda;
+        color: white;
+        cursor: pointer;
+    }
 }
 
 @mixin limparFiltros {
     font-size: $fontSize;
     width: 30%;
     margin-right: 40px;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 @mixin verOfertas {
@@ -48,6 +96,10 @@ $colorBotaoVenda: #f7a500;
     border-radius: 2px;
     width: 70%;
     margin-top: 30px;
+    &:hover {
+        background-color: rgb(153, 19, 19);
+        cursor: pointer;
+    }
 }
 
 @mixin grid {
@@ -59,6 +111,7 @@ $colorBotaoVenda: #f7a500;
     @include grid();
     column-gap: 5%;
     margin-top: 50px;
+    max-width: $maximum-width;
 }
 
 @mixin box {
@@ -123,7 +176,10 @@ $colorBotaoVenda: #f7a500;
 }
 
 @include mobile() {
+    .tab {@include tab};
+    .fas {@include icon};
     .tabs {@include tabs};
+    .botao-vender {@include botaoVender()};
     .vender-meu-carro {@include venderMeuCarro()};
     .botao-ofertas {@include verOfertas()};
     .botao-limpar-filtros {@include limparFiltros()};
@@ -141,7 +197,10 @@ $colorBotaoVenda: #f7a500;
 }
 
 @include desktop() {
+    .tab {@include tab};
+    .fas {@include icon};
     .tabs {@include tabs};
+    .botao-vender {@include botaoVender()};
     .botao-ofertas {@include verOfertas()};
     .botao-limpar-filtros {@include limparFiltros()};
     .vender-meu-carro {@include venderMeuCarro()};

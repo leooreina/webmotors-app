@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/BoxFilter.scss';
 import { tabs } from '../data/local/tabs';
-import { NavLink } from 'react-router-dom';
 
 export default class BoxFilters extends Component {
 
@@ -35,19 +34,22 @@ export default class BoxFilters extends Component {
 
     render() {
         return (
-            <div className="page">
+            <div>
                 <div className="header">
                     <div className="tabs">
                         {
-                            tabs.map(tabs => (
-                                <NavLink to={tabs.url}>
-                                    <div>{tabs.icon}</div>
-                                    <div>{tabs.name}</div>
-                                </NavLink>
+                            tabs.map(tab => (
+                                <div className="tab">
+                                    <i className={tab.icon}></i>
+                                    <div className="comprar-tab">
+                                        <div className="comprar">COMPRAR</div>
+                                        <div className="tab-name">{tab.name}</div>
+                                    </div>
+                                </div>
                             ))
                         }
                     </div>
-                    <div>
+                    <div className="botao-vender">
                         <button className="vender-meu-carro">Vender meu carro</button>
                     </div>
                 </div>
