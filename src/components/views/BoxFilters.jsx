@@ -16,6 +16,7 @@ export default class BoxFilters extends Component {
             opcao3: false,
             opcao4: false,
             localizacao: '',
+            isOpened: false,
             initialRequests: [
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
@@ -28,6 +29,7 @@ export default class BoxFilters extends Component {
         this.handleInputCheckboxChange = this.handleInputCheckboxChange.bind(this);
         this.handleClearInputText = this.handleClearInputText.bind(this);
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
+        this.handleHideShowButton = this.handleHideShowButton.bind(this);
     }
 
     componentDidMount() {
@@ -58,6 +60,12 @@ export default class BoxFilters extends Component {
                 localizacao: ''
             })
         }
+    }
+
+    handleHideShowButton() {
+        if (this.state.isOpened)
+            this.setState({ isOpened: false}) 
+        else this.setState({ isOpened: true})
     }
 
     // getRequest() {
@@ -203,59 +211,71 @@ export default class BoxFilters extends Component {
                     <div className="row">
                         <div>
                             <button className="busca-avancada">
-                                <i className="fas fa-angle-right busca-icone"></i>
-                                <span className="busca-avancada-label">Busca avançada</span>
+                                <i className={
+                                    this.state.isOpened 
+                                    ? 'fas fa-angle-down busca-icone'
+                                    :'fas fa-angle-right busca-icone' 
+                                }></i>
+                                <span 
+                                    name="avancadas"
+                                    className="busca-avancada-label"
+                                    onClick={this.handleHideShowButton}
+                                >Busca avançada</span>
                             </button>
-                            <div className="opcoes-avancadas-box">
-                                <div className="opcoes-avancadas">
-                                    <input
-                                        id="opcao1_id" 
-                                        className="css-checkbox"
-                                        type="checkbox"
-                                        name="opcao1"
-                                        checked={this.state.opcao1}
-                                        onChange={this.handleInputCheckboxChange}
-                                    />
-                                    <label id="opcao1" htmlFor="opcao1_id" className="css-label lite-red-check">4 Portas</label>
-                                </div>
+                            {
+                            this.state.isOpened ? 
+                                <div className="opcoes-avancadas-box">
+                                    <div className="opcoes-avancadas">
+                                        <input
+                                            id="opcao1_id" 
+                                            className="css-checkbox"
+                                            type="checkbox"
+                                            name="opcao1"
+                                            checked={this.state.opcao1}
+                                            onChange={this.handleInputCheckboxChange}
+                                        />
+                                        <label id="opcao1" htmlFor="opcao1_id" className="css-label lite-red-check">4 Portas</label>
+                                    </div>
 
-                                <div className="opcoes-avancadas">
-                                    <input
-                                        id="opcao2_id" 
-                                        className="css-checkbox"
-                                        type="checkbox"
-                                        name="opcao2"
-                                        checked={this.state.opcao2}
-                                        onChange={this.handleInputCheckboxChange}
-                                    />
-                                    <label id="opcao2" htmlFor="opcao2_id" className="css-label lite-red-check">2 Portas</label>
-                                </div>
+                                    <div className="opcoes-avancadas">
+                                        <input
+                                            id="opcao2_id" 
+                                            className="css-checkbox"
+                                            type="checkbox"
+                                            name="opcao2"
+                                            checked={this.state.opcao2}
+                                            onChange={this.handleInputCheckboxChange}
+                                        />
+                                        <label id="opcao2" htmlFor="opcao2_id" className="css-label lite-red-check">2 Portas</label>
+                                    </div>
 
-                                <div className="opcoes-avancadas">
-                                    <input
-                                        id="opcao3_id"
-                                        className="css-checkbox"
-                                        type="checkbox"
-                                        name="opcao3"
-                                        checked={this.state.opcao3}
-                                        onChange={this.handleInputCheckboxChange}
-                                    />
-                                    <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Com ar condicionado</label>
-                                </div>
+                                    <div className="opcoes-avancadas">
+                                        <input
+                                            id="opcao3_id"
+                                            className="css-checkbox"
+                                            type="checkbox"
+                                            name="opcao3"
+                                            checked={this.state.opcao3}
+                                            onChange={this.handleInputCheckboxChange}
+                                        />
+                                        <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Com ar condicionado</label>
+                                    </div>
 
-                                <div className="opcoes-avancadas">
-                                    <input
-                                        id="opcao4_id" 
-                                        className="css-checkbox"
-                                        type="checkbox"
-                                        name="opcao4"
-                                        checked={this.state.opcao4}
-                                        onChange={this.handleInputCheckboxChange}
-                                    />
-                                    <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Sem ar condicionado</label>
-                                </div>
+                                    <div className="opcoes-avancadas">
+                                        <input
+                                            id="opcao4_id" 
+                                            className="css-checkbox"
+                                            type="checkbox"
+                                            name="opcao4"
+                                            checked={this.state.opcao4}
+                                            onChange={this.handleInputCheckboxChange}
+                                        />
+                                        <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Sem ar condicionado</label>
+                                    </div>
                                 
-                            </div>
+                                </div>
+                            : null
+                            }
                         </div>
                         <div>
                             <div>
