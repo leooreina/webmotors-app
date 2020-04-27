@@ -15,6 +15,7 @@ export default class BoxFilters extends Component {
             opcao2: false,
             opcao3: false,
             opcao4: false,
+            localizacao: '',
             initialRequests: [
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
@@ -24,14 +25,16 @@ export default class BoxFilters extends Component {
             dataAPI: [],
         }
 
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputCheckboxChange = this.handleInputCheckboxChange.bind(this);
+        this.handleClearInputText = this.handleClearInputText.bind(this);
+        this.handleInputTextChange = this.handleInputTextChange.bind(this);
     }
 
     componentDidMount() {
         // this.getRequest();
     }
 
-    handleInputChange(event) {
+    handleInputCheckboxChange(event) {
         const { name, checked } = event.target;
         if (name === 'novos') { this.setState({ novos: checked }) }
         if (name === 'usados') { this.setState({ usados: checked }) }
@@ -39,6 +42,22 @@ export default class BoxFilters extends Component {
         if (name === 'opcao2') { this.setState({ opcao2: checked }) }
         if (name === 'opcao3') { this.setState({ opcao3: checked }) }
         if (name === 'opcao4') { this.setState({ opcao4: checked }) }
+    }
+
+    handleInputTextChange(event) {
+        const { value } = event.target;
+        this.setState({
+            localizacao: value
+        })
+    }
+
+    handleClearInputText() {
+        const localizacao = document.getElementsByName('localizacao');
+        if (localizacao.value !== '') {
+            this.setState({
+                localizacao: ''
+            })
+        }
     }
 
     // getRequest() {
@@ -86,7 +105,7 @@ export default class BoxFilters extends Component {
                                 className="css-checkbox"
                                 type="checkbox"
                                 checked={this.state.novos}
-                                onChange={this.handleInputChange}
+                                onChange={this.handleInputCheckboxChange}
                             />
                             <label id="novos" htmlFor="novos_id" className="css-label lite-red-check">Novos</label>
 
@@ -97,7 +116,7 @@ export default class BoxFilters extends Component {
                                 type="checkbox"
                                 name="usados"
                                 checked={this.state.usados}
-                                onChange={this.handleInputChange}
+                                onChange={this.handleInputCheckboxChange}
                             />
                             <label id="usados" htmlFor="usados_id" className="css-label lite-red-check">Usados</label>
                         </form>
@@ -108,8 +127,17 @@ export default class BoxFilters extends Component {
                             <form className="form-input">
                                 <i className="fas fa-map-marker-alt"></i>
                                 <label className="label" htmlFor="localizacao">Onde: </label>
-                                <input className="localizacao" type="text" name="localizacao"/>
-                                <i className="fas fa-times-circle"></i>
+                                <input 
+                                    className="localizacao"
+                                    type="text"
+                                    name="localizacao"
+                                    value={this.state.localizacao}
+                                    onChange={this.handleInputTextChange}
+                                />
+                                <i 
+                                    className="fas fa-times-circle"
+                                    onClick={this.handleClearInputText}
+                                ></i>
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="raio">Raio: </label>
@@ -186,7 +214,7 @@ export default class BoxFilters extends Component {
                                         type="checkbox"
                                         name="opcao1"
                                         checked={this.state.opcao1}
-                                        onChange={this.handleInputChange}
+                                        onChange={this.handleInputCheckboxChange}
                                     />
                                     <label id="opcao1" htmlFor="opcao1_id" className="css-label lite-red-check">4 Portas</label>
                                 </div>
@@ -198,7 +226,7 @@ export default class BoxFilters extends Component {
                                         type="checkbox"
                                         name="opcao2"
                                         checked={this.state.opcao2}
-                                        onChange={this.handleInputChange}
+                                        onChange={this.handleInputCheckboxChange}
                                     />
                                     <label id="opcao2" htmlFor="opcao2_id" className="css-label lite-red-check">2 Portas</label>
                                 </div>
@@ -210,7 +238,7 @@ export default class BoxFilters extends Component {
                                         type="checkbox"
                                         name="opcao3"
                                         checked={this.state.opcao3}
-                                        onChange={this.handleInputChange}
+                                        onChange={this.handleInputCheckboxChange}
                                     />
                                     <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Com ar condicionado</label>
                                 </div>
@@ -222,7 +250,7 @@ export default class BoxFilters extends Component {
                                         type="checkbox"
                                         name="opcao4"
                                         checked={this.state.opcao4}
-                                        onChange={this.handleInputChange}
+                                        onChange={this.handleInputCheckboxChange}
                                     />
                                     <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Sem ar condicionado</label>
                                 </div>
