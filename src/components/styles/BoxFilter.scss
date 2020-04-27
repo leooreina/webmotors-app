@@ -1,9 +1,10 @@
 // medias
 $mobile-width: 320px;
 $maximum-width: 933px;
-
+$maximun-height: 312px;
 $fontSize: 14px;
 $fontColor: #808080;
+$redColor: rgb(199, 24, 24);
 $colorBotaoVenda: #f7a500;
 
 @mixin mobile {
@@ -16,18 +17,23 @@ $colorBotaoVenda: #f7a500;
 
 @mixin hoversBorderTab {
     &:hover {
-        color: rgb(199, 24, 24);
         cursor: pointer;
         border: solid;
         border-width: 3px;
         border-color: #f2f3f5;
-        border-bottom-color: rgb(199, 24, 24);
+        border-bottom-color: $redColor;
+        .fas {
+            color: $redColor;
+        }
+        .tab-name {
+            color: $redColor;
+        }
     }
 }
 
 @mixin hoversTab {
     &:hover {
-        color: rgb(199, 24, 24);
+        color: $redColor;
         cursor: pointer;
     }
 }
@@ -44,14 +50,26 @@ $colorBotaoVenda: #f7a500;
     text-align: center;
     color: $fontColor;
     font-size: 24px;
-    padding-top: 10px;
+    padding-top: 12px;
     @include hoversTab();
 }
 
 @mixin tab {
     display: grid;
     grid-template-columns: 90px 90px;
+    color: $fontColor;
     @include hoversBorderTab();
+}
+
+@mixin tabName {
+    font-size: 22px;
+}
+
+@mixin comprarWord {
+    font-size: 12px;
+    &:hover {
+        color: $fontColor;
+    }
 }
 
 @mixin botaoVender {
@@ -89,7 +107,7 @@ $colorBotaoVenda: #f7a500;
 @mixin verOfertas {
     color: white;
     border: none;
-    background-color: rgb(199, 24, 24);
+    background-color: $redColor;
     font-weight: bold;
     font-size: 16px;
     padding: 15px;
@@ -100,6 +118,11 @@ $colorBotaoVenda: #f7a500;
         background-color: rgb(153, 19, 19);
         cursor: pointer;
     }
+}
+
+@mixin buscaAvancada {
+    border: none;
+    background-color: white;
 }
 
 @mixin grid {
@@ -118,6 +141,7 @@ $colorBotaoVenda: #f7a500;
     background-color: white;
     height: 312px;
     max-width: $maximum-width;
+    max-height: $maximun-height;
     color: $fontColor;
 }
 
@@ -160,9 +184,7 @@ $colorBotaoVenda: #f7a500;
 
 @mixin localizacao {
     border-style: none;
-    ::placeholder {
-        font-size: $fontSize;
-    }
+    height: 100%;
 }
 
 @mixin formInput {
@@ -175,14 +197,42 @@ $colorBotaoVenda: #f7a500;
     color: $fontColor;
 }
 
+@mixin buscaIcone {
+    font-size: 13px;
+    color: $redColor;
+}
+
+@mixin opcoesAvacadasBox {
+    margin-top: 10px;
+}
+
+@mixin opcoesAvancadas {
+    margin-left: 15px;
+}
+
+@mixin buscaAvancadaLabel {
+    font-size: $fontSize;
+    font-weight: bold;
+    margin-left: 10px;
+    color: $redColor;
+}
+
+@mixin markerIcon {
+    padding-right: 8px;
+}
+
 @include mobile() {
     .tab {@include tab};
-    .fas {@include icon};
+    .tab-name {@include tabName};
+    .comprar {@include comprarWord};
+    .fa-car, .fa-motorcycle {@include icon};
     .tabs {@include tabs};
     .botao-vender {@include botaoVender()};
     .vender-meu-carro {@include venderMeuCarro()};
     .botao-ofertas {@include verOfertas()};
     .botao-limpar-filtros {@include limparFiltros()};
+    .busca-avancada {@include buscaAvancada()};
+    .busca-icone {@include buscaIcone()};
     .header {@include header};
     .box {@include box};
     .row {@include row};
@@ -194,16 +244,27 @@ $colorBotaoVenda: #f7a500;
     .localizacao {@include localizacao()};
     .group-form-localizacao {@include groupFormLocalizacao()};
     .label {@include label()};
+    .opcoes-avancadas-box {@include opcoesAvacadasBox()};
+    .opcoes-avancadas {@include opcoesAvancadas()};
+    .busca-avancada-label {@include buscaAvancadaLabel()};
+    .fa-map-marker-alt {@include markerIcon()};
+    input[type=text] {
+        font-weight: bold;
+    }
 }
 
 @include desktop() {
     .tab {@include tab};
-    .fas {@include icon};
+    .tab-name {@include tabName};
+    .comprar {@include comprarWord};
+    .fa-car, .fa-motorcycle {@include icon};
     .tabs {@include tabs};
     .botao-vender {@include botaoVender()};
     .botao-ofertas {@include verOfertas()};
     .botao-limpar-filtros {@include limparFiltros()};
     .vender-meu-carro {@include venderMeuCarro()};
+    .busca-avancada {@include buscaAvancada()};
+    .busca-icone {@include buscaIcone()};
     .header {@include header};
     .box {@include box};
     .row {@include row};
@@ -215,5 +276,13 @@ $colorBotaoVenda: #f7a500;
     .localizacao {@include localizacao()};
     .group-form-localizacao {@include groupFormLocalizacao()};
     .label {@include label()};
+    .opcoes-avancadas-box {@include opcoesAvacadasBox()};
+    .opcoes-avancadas {@include opcoesAvancadas()};
+    .busca-avancada-label {@include buscaAvancadaLabel()};
+    .fa-map-marker-alt {@include markerIcon()};
+    input[type=text] {
+        font-weight: bold;
+        font-size: 13.5px;
+    }
 }
   

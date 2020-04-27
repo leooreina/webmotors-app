@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/BoxFilter.scss';
 import { tabs } from '../data/local/tabs';
+import '../../assets/css/checkbox.css';
 
 export default class BoxFilters extends Component {
 
@@ -57,28 +58,31 @@ export default class BoxFilters extends Component {
 
                     <div className="first-row">
                         <form className="form-first-row">
-                            <label htmlFor="novos">
-                                Novos
-                                <input 
-                                    type="checkbox"
-                                    name="novos"
-                                />
-                            </label>
-                            <label htmlFor="usados">
-                                Usados
-                                <input 
-                                    type="checkbox"
-                                    name="usados"
-                                />
-                            </label>
+                            <input
+                                htmlFor="novos" 
+                                className="css-checkbox"
+                                type="checkbox"
+                                name="novos"
+                            />
+                            <label id="novos" htmlFor="novos" className="css-label lite-red-check">Novos</label>
+
+                            <input 
+                                htmlFor="usados"
+                                className="css-checkbox"
+                                type="checkbox"
+                                name="usados"
+                            />
+                            <label id="usados" htmlFor="usados" className="css-label lite-red-check">Usados</label>
                         </form>
                     </div>
 
                     <div className="row">
                         <div className="group-form-localizacao">
                             <form className="form-input">
+                                <i className="fas fa-map-marker-alt"></i>
                                 <label className="label" htmlFor="localizacao">Onde: </label>
                                 <input className="localizacao" type="text" name="localizacao"/>
+                                <i className="fas fa-times-circle"></i>
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="raio">Raio: </label>
@@ -143,27 +147,49 @@ export default class BoxFilters extends Component {
 
                     <div className="row">
                         <div>
-                            <button className="dropbtn">Busca avançada <span>:icone</span></button>
-                            <div id="options-advanced">
-                                <div>
-                                    <label htmlFor="opcao1">
-                                        opcao1
-                                        <input type="checkbox" name="opcao1" />
-                                    </label>
+                            <button className="busca-avancada">
+                                <i className="fas fa-angle-right busca-icone"></i>
+                                <span className="busca-avancada-label">Busca avançada</span>
+                            </button>
+                            <div className="opcoes-avancadas-box">
+                                <div className="opcoes-avancadas">
+                                    <input
+                                        htmlFor="opcao1" 
+                                        className="css-checkbox"
+                                        type="checkbox"
+                                        name="opcao1"
+                                    />
+                                    <label id="opcao1" htmlFor="opcao1" className="css-label lite-red-check">4 Portas</label>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="opcao2">
-                                        opcao2
-                                        <input type="checkbox" name="opcao2" />
-                                    </label>
+                                <div className="opcoes-avancadas">
+                                    <input
+                                        htmlFor="opcao2" 
+                                        className="css-checkbox"
+                                        type="checkbox"
+                                        name="opcao2"
+                                    />
+                                    <label id="opcao2" htmlFor="opcao2" className="css-label lite-red-check">2 Portas</label>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="opcao3">
-                                        opcao3
-                                        <input type="checkbox" name="opcao3" />
-                                    </label>
+                                <div className="opcoes-avancadas">
+                                    <input
+                                        htmlFor="opcao3" 
+                                        className="css-checkbox"
+                                        type="checkbox"
+                                        name="opcao3"
+                                    />
+                                    <label id="opcao3" htmlFor="opcao3" className="css-label lite-red-check">Com ar condicionado</label>
+                                </div>
+
+                                <div className="opcoes-avancadas">
+                                    <input
+                                        htmlFor="opcao3" 
+                                        className="css-checkbox"
+                                        type="checkbox"
+                                        name="opcao3"
+                                    />
+                                    <label id="opcao3" htmlFor="opcao3" className="css-label lite-red-check">Sem ar condicionado</label>
                                 </div>
                                 
                             </div>
