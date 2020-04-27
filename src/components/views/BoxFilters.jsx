@@ -5,33 +5,55 @@ import '../../assets/css/checkbox.css';
 
 export default class BoxFilters extends Component {
 
-    state = {
-        initialRequests: [
-            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
-            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
-            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=1',
-            'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1'
-        ],
-        dataAPI: []
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            novos: true,
+            usados: false,
+            opcao1: false,
+            opcao2: false,
+            opcao3: false,
+            opcao4: false,
+            initialRequests: [
+                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
+                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
+                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=1',
+                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1'
+            ],
+            dataAPI: [],
+        }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
-        this.getRequest();
+        // this.getRequest();
     }
 
-    getRequest() {
-        this.state.initialRequests.map(request => {
-            fetch(request)
-                .then((res) => {
-                    if (res.ok) {
-                        res.json().then(response => this.state.dataAPI.push(response));
-                    }
-                    else console.log('Bad request, please try again.');
-                })
-                .catch(error => console.log(error));
-            }
-        )
+    handleInputChange(event) {
+        const { name, checked } = event.target;
+        if (name === 'novos') { this.setState({ novos: checked }) }
+        if (name === 'usados') { this.setState({ usados: checked }) }
+        if (name === 'opcao1') { this.setState({ opcao1: checked }) }
+        if (name === 'opcao2') { this.setState({ opcao2: checked }) }
+        if (name === 'opcao3') { this.setState({ opcao3: checked }) }
+        if (name === 'opcao4') { this.setState({ opcao4: checked }) }
     }
+
+    // getRequest() {
+    //     this.state.initialRequests.map(request => {
+    //         fetch(request)
+    //             .then((res) => {
+    //                 if (res.ok) {
+    //                     res.json().then(response => this.state.dataAPI.push(response));
+    //                 }
+    //                 else console.log('Bad request, please try again.');
+    //             })
+    //             .catch(error => console.log(error));
+    //         }
+    //     )
+    // }
 
     render() {
         return (
@@ -39,8 +61,8 @@ export default class BoxFilters extends Component {
                 <div className="header">
                     <div className="tabs">
                         {
-                            tabs.map(tab => (
-                                <div className="tab">
+                            tabs.map((tab, index) => (
+                                <div className="tab" key={index}>
                                     <i className={tab.icon}></i>
                                     <div className="comprar-tab">
                                         <div className="comprar">COMPRAR</div>
@@ -59,20 +81,25 @@ export default class BoxFilters extends Component {
                     <div className="first-row">
                         <form className="form-first-row">
                             <input
-                                htmlFor="novos" 
+                                id="novos_id"
+                                name="novos"
                                 className="css-checkbox"
                                 type="checkbox"
-                                name="novos"
+                                checked={this.state.novos}
+                                onChange={this.handleInputChange}
                             />
-                            <label id="novos" htmlFor="novos" className="css-label lite-red-check">Novos</label>
+                            <label id="novos" htmlFor="novos_id" className="css-label lite-red-check">Novos</label>
 
                             <input 
+                                id="usados_id"
                                 htmlFor="usados"
                                 className="css-checkbox"
                                 type="checkbox"
                                 name="usados"
+                                checked={this.state.usados}
+                                onChange={this.handleInputChange}
                             />
-                            <label id="usados" htmlFor="usados" className="css-label lite-red-check">Usados</label>
+                            <label id="usados" htmlFor="usados_id" className="css-label lite-red-check">Usados</label>
                         </form>
                     </div>
 
@@ -154,42 +181,50 @@ export default class BoxFilters extends Component {
                             <div className="opcoes-avancadas-box">
                                 <div className="opcoes-avancadas">
                                     <input
-                                        htmlFor="opcao1" 
+                                        id="opcao1_id" 
                                         className="css-checkbox"
                                         type="checkbox"
                                         name="opcao1"
+                                        checked={this.state.opcao1}
+                                        onChange={this.handleInputChange}
                                     />
-                                    <label id="opcao1" htmlFor="opcao1" className="css-label lite-red-check">4 Portas</label>
+                                    <label id="opcao1" htmlFor="opcao1_id" className="css-label lite-red-check">4 Portas</label>
                                 </div>
 
                                 <div className="opcoes-avancadas">
                                     <input
-                                        htmlFor="opcao2" 
+                                        id="opcao2_id" 
                                         className="css-checkbox"
                                         type="checkbox"
                                         name="opcao2"
+                                        checked={this.state.opcao2}
+                                        onChange={this.handleInputChange}
                                     />
-                                    <label id="opcao2" htmlFor="opcao2" className="css-label lite-red-check">2 Portas</label>
+                                    <label id="opcao2" htmlFor="opcao2_id" className="css-label lite-red-check">2 Portas</label>
                                 </div>
 
                                 <div className="opcoes-avancadas">
                                     <input
-                                        htmlFor="opcao3" 
+                                        id="opcao3_id"
                                         className="css-checkbox"
                                         type="checkbox"
                                         name="opcao3"
+                                        checked={this.state.opcao3}
+                                        onChange={this.handleInputChange}
                                     />
-                                    <label id="opcao3" htmlFor="opcao3" className="css-label lite-red-check">Com ar condicionado</label>
+                                    <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Com ar condicionado</label>
                                 </div>
 
                                 <div className="opcoes-avancadas">
                                     <input
-                                        htmlFor="opcao3" 
+                                        id="opcao4_id" 
                                         className="css-checkbox"
                                         type="checkbox"
-                                        name="opcao3"
+                                        name="opcao4"
+                                        checked={this.state.opcao4}
+                                        onChange={this.handleInputChange}
                                     />
-                                    <label id="opcao3" htmlFor="opcao3" className="css-label lite-red-check">Sem ar condicionado</label>
+                                    <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Sem ar condicionado</label>
                                 </div>
                                 
                             </div>
