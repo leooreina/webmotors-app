@@ -17,6 +17,7 @@ export default class BoxFilters extends Component {
             opcao4: false,
             localizacao: '',
             isOpened: false,
+            selectedTab: 'CARROS',
             initialRequests: [
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
                 'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
@@ -30,6 +31,7 @@ export default class BoxFilters extends Component {
         this.handleClearInputText = this.handleClearInputText.bind(this);
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleHideShowButton = this.handleHideShowButton.bind(this);
+        this.handleSelectedTab = this.handleSelectedTab.bind(this);
     }
 
     componentDidMount() {
@@ -38,12 +40,12 @@ export default class BoxFilters extends Component {
 
     handleInputCheckboxChange(event) {
         const { name, checked } = event.target;
-        if (name === 'novos') { this.setState({ novos: checked }) }
-        if (name === 'usados') { this.setState({ usados: checked }) }
-        if (name === 'opcao1') { this.setState({ opcao1: checked }) }
-        if (name === 'opcao2') { this.setState({ opcao2: checked }) }
-        if (name === 'opcao3') { this.setState({ opcao3: checked }) }
-        if (name === 'opcao4') { this.setState({ opcao4: checked }) }
+        if (name === 'novos') this.setState({ novos: checked })
+        if (name === 'usados') this.setState({ usados: checked })
+        if (name === 'opcao1') this.setState({ opcao1: checked })
+        if (name === 'opcao2') this.setState({ opcao2: checked })
+        if (name === 'opcao3') this.setState({ opcao3: checked })
+        if (name === 'opcao4') this.setState({ opcao4: checked })
     }
 
     handleInputTextChange(event) {
@@ -63,9 +65,16 @@ export default class BoxFilters extends Component {
     }
 
     handleHideShowButton() {
-        if (this.state.isOpened)
-            this.setState({ isOpened: false}) 
+        if (this.state.isOpened) this.setState({ isOpened: false}) 
         else this.setState({ isOpened: true})
+    }
+
+    handleSelectedTab() {
+        const { selectedTab } = this.state;
+        if (selectedTab === 'CARROS') 
+            this.setState({ selectedTab: 'MOTOS' })
+        if (selectedTab === 'MOTOS') 
+            this.setState({ selectedTab: 'CARROS'})
     }
 
     // getRequest() {
@@ -89,7 +98,16 @@ export default class BoxFilters extends Component {
                     <div className="tabs">
                         {
                             tabs.map((tab, index) => (
-                                <div className="tab" key={index}>
+                                <div 
+                                    className={
+                                        this.state.selectedTab === tab.name
+                                            ? "tab tab-selected"
+                                            : "tab"
+                                    }
+                                    key={index}
+                                    onClick={this.handleSelectedTab}
+                                    name={tab.name}   
+                                >
                                     <i className={tab.icon}></i>
                                     <div className="comprar-tab">
                                         <div className="comprar">COMPRAR</div>

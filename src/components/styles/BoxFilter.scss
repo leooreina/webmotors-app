@@ -15,6 +15,19 @@ $colorBotaoVenda: #f7a500;
   @media (min-width: #{$maximum-width + 1px}) {@content;}
 }
 
+@mixin tabSelected {
+    border: solid;
+    border-width: 3px;
+    border-color: #f2f3f5;
+    border-bottom-color: $redColor;
+    .fas {
+        color: $redColor;
+    }
+    .tab-name {
+        color: $redColor;
+    }
+}
+
 @mixin hoversBorderTab {
     &:hover {
         cursor: pointer;
@@ -33,7 +46,6 @@ $colorBotaoVenda: #f7a500;
 
 @mixin hoversTab {
     &:hover {
-        color: $redColor;
         cursor: pointer;
     }
 }
@@ -58,7 +70,7 @@ $colorBotaoVenda: #f7a500;
     display: grid;
     grid-template-columns: 90px 90px;
     color: $fontColor;
-    @include hoversBorderTab();
+    @include hoversTab();
 }
 
 @mixin tabName {
@@ -123,6 +135,12 @@ $colorBotaoVenda: #f7a500;
 @mixin buscaAvancada {
     border: none;
     background-color: white;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 @mixin grid {
@@ -195,6 +213,9 @@ $colorBotaoVenda: #f7a500;
 @mixin label {
     font-size: $fontSize;
     color: $fontColor;
+    &:focus {
+        outline: none;
+    }
 }
 
 @mixin buscaIcone {
@@ -219,11 +240,13 @@ $colorBotaoVenda: #f7a500;
 
 @mixin markerIcon {
     padding-right: 8px;
+    color: $redColor;
 }
 
 @include mobile() {
     .tab {@include tab};
     .tab-name {@include tabName};
+    .tab-selected {@include tabSelected()};
     .comprar {@include comprarWord};
     .fa-car, .fa-motorcycle {@include icon};
     .tabs {@include tabs};
@@ -256,6 +279,7 @@ $colorBotaoVenda: #f7a500;
 @include desktop() {
     .tab {@include tab};
     .tab-name {@include tabName};
+    .tab-selected {@include tabSelected()};
     .comprar {@include comprarWord};
     .fa-car, .fa-motorcycle {@include icon};
     .tabs {@include tabs};
