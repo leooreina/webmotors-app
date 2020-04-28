@@ -1,0 +1,36 @@
+.select-css {
+    display: inline;
+	font-size: 14px;
+	font-family: sans-serif;
+	font-weight: 700;
+	color: #444;
+	padding: .6em 1.4em .5em .8em;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	border: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+    background-color: #fff;
+    background-image: url('../images/caret-down-solid.svg');
+	background-repeat: no-repeat, repeat;
+	background-position: right .2em top 50%, 0 0;
+	background-size: .65em auto, 100%;
+}
+.select-css::-ms-expand {
+	display: none;
+}
+.select-css:hover {
+	border-color: #888;
+}
+.select-css:focus {
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+	border-color: #aaa;
+	outline: none;
+}
+.select-css option {
+	font-weight:normal;
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import '../styles/BoxFilter.scss';
 import { tabs } from '../data/local/tabs';
 import '../../assets/css/checkbox.css';
+import '../../assets/css/select.css';
 
 export default class BoxFilters extends Component {
 
@@ -167,7 +168,7 @@ export default class BoxFilters extends Component {
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="raio">Raio: </label>
-                                <select name="raio" defaultValue="100">
+                                <select className="select-css" name="raio" defaultValue="100">
                                     <option value="10">10km</option>
                                     <option value="20">20km</option>
                                     <option value="30">30km</option>
@@ -180,7 +181,7 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="marca">Marca: </label>
-                                <select name="marca">
+                                <select className="select-css" name="marca">
                                     {
                                         this.state.dataAPI ? this.state.dataAPI.map(make => (
                                             <option value={make.ID}>{make.Name}</option>
@@ -190,7 +191,7 @@ export default class BoxFilters extends Component {
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="modelo">Modelo: </label >
-                                <select name="modelo">
+                                <select className="select-css" name="modelo">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
@@ -202,14 +203,14 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="ano">Ano Desejado: </label>
-                                <select name="ano">
-                                    <option value=""></option>
+                                <select className="select-css" name="ano">
+                                    <option value="2020">2020</option>
                                     <option value=""></option>
                                 </select>
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="preco">Faixa de preço: </label>
-                                <select name="preco">
+                                <select className="select-css" name="preco">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
@@ -218,7 +219,7 @@ export default class BoxFilters extends Component {
                         <div>
                             <form className="forms">
                                 <label className="label" htmlFor="versao">Versão: </label>
-                                <select name="versao">
+                                <select className="select-css" name="versao">
                                     <option value=""></option>
                                     <option value=""></option>
                                 </select>
