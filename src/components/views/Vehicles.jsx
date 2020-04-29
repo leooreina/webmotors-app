@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import '../styles/Vehicles.scss';
 
 export default class Vehicles extends Component {
+    state = {
+        vehicles: [],
+    }
+
+    filters = {
+        make: this.props.make,
+        model: this.props.model,
+        version: this.props.version,
+        year: this.props.year,
+        price: this.props.price
+    }
+
     constructor(props) {
         super(props)
-        this.state = {
-            vehicles: []
-        }
         this.buildVehiclesPage = this.buildVehiclesPage.bind(this)
     }
 
