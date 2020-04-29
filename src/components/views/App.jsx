@@ -12,7 +12,7 @@ function App() {
         width="240"
         alt="webmotors logo"
       />
-      <BoxFilters/>
+      <BoxFilters initialMakeOption={1}/>
     </div>
   );
 }

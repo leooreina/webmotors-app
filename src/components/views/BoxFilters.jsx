@@ -3,6 +3,7 @@ import '../styles/BoxFilter.scss';
 import { tabs } from '../data/local/tabs';
 import '../../assets/css/checkbox.css';
 import '../../assets/css/select.css';
+import Vehicles from '../views/Vehicles';
 
 export default class BoxFilters extends Component {
 
@@ -17,26 +18,30 @@ export default class BoxFilters extends Component {
             opcao3: false,
             opcao4: false,
             localizacao: '',
+            isVehicleComponentOpened: false,
             isOpened: false,
             selectedTab: 'CARROS',
-            initialRequests: [
-                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make',
-                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=1',
-                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=1',
-                'http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1'
-            ],
-            dataAPI: [],
+            make: [{ ID: 'Todos', Name: 'Todos'}],
+            model: [{ ID: 'Todos', Name: 'Todos' }],
+            version: [{ ID: 'Todas', Name: 'Todas' }]
         }
 
+        this.getOptionsMake = this.getOptionsMake.bind(this);
+        this.handleSelectedMake = this.handleSelectedMake.bind(this);
+        this.handleSelectedModel = this.handleSelectedModel.bind(this);
+        this.cleanFilter = this.cleanFilter.bind(this);
         this.handleInputCheckboxChange = this.handleInputCheckboxChange.bind(this);
         this.handleClearInputText = this.handleClearInputText.bind(this);
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleHideShowButton = this.handleHideShowButton.bind(this);
         this.handleSelectedTab = this.handleSelectedTab.bind(this);
+        this.handleVehicleComponent = this.handleVehicleComponent.bind(this);
     }
 
     componentDidMount() {
-        // this.getRequest();
+        this.getOptionsMake();
+        this.handleSelectedMake(this.props.initialMakeOption);
+        this.handleSelectedModel(this.props.initialMakeOption);
     }
 
     handleInputCheckboxChange(event) {
@@ -78,19 +83,43 @@ export default class BoxFilters extends Component {
             this.setState({ selectedTab: 'CARROS'})
     }
 
-    // getRequest() {
-    //     this.state.initialRequests.map(request => {
-    //         fetch(request)
-    //             .then((res) => {
-    //                 if (res.ok) {
-    //                     res.json().then(response => this.state.dataAPI.push(response));
-    //                 }
-    //                 else console.log('Bad request, please try again.');
-    //             })
-    //             .catch(error => console.log(error));
-    //         }
-    //     )
-    // }
+    cleanFilter() {
+        this.getOptionsMake();
+        this.setState({
+            model: [{ ID: 'Todos', Name: 'Todos' }],
+            version: [{ ID: 'Todas', Name: 'Todas' }]
+        })
+    }
+
+    handleSelectedModel(modelId) {
+        fetch(`http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=${modelId}`)
+            .then((res) => res.json()
+                .then(data => this.setState({ version: data }))
+            )
+            .catch((error) => console.log(error))
+    }   
+
+    handleSelectedMake(makeId) {
+        fetch(`http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=${makeId}`)
+            .then((res) => res.json()
+                .then(data => this.setState({ model: data }))
+            )
+            .catch((error) => console.log(error))
+    }
+
+    handleVehicleComponent() {
+        this.setState({
+            isVehicleComponentOpened: true
+        })
+    }
+
+    getOptionsMake() {
+        fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make')
+            .then((res) => res.json()
+                .then(data => this.setState({ make: data }))
+            )
+            .catch((error) => console.log(error))
+    }
 
     render() {
         return (
@@ -181,19 +210,40 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="marca">Marca: </label>
-                                <select className="select-css" name="marca">
+                                <select 
+                                    className="select-css"
+                                    name="marca"
+                                    onChange={(e) => this.handleSelectedMake(e.target.value)}
+                                >
                                     {
-                                        this.state.dataAPI ? this.state.dataAPI.map(make => (
-                                            <option value={make.ID}>{make.Name}</option>
+                                        this.state.make ? this.state.make.map((make, index) => (
+                                            <option 
+                                                key={index}
+                                                value={make.ID}
+                                            >
+                                                {make.Name}
+                                            </option>
                                         )) : null
                                     }
                                 </select>
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="modelo">Modelo: </label >
-                                <select className="select-css" name="modelo">
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                <select 
+                                    className="select-css"
+                                    name="modelo"
+                                    onChange={(e) => this.handleSelectedModel(e.target.value)}
+                                >
+                                    {
+                                        this.state.model ? this.state.model.map((model, index) => (
+                                            <option 
+                                                key={index}
+                                                value={model.ID}
+                                            >
+                                                {model.Name}
+                                            </option>
+                                        )) : null
+                                    }
                                 </select>
                             </form>
                         </div>
@@ -220,8 +270,16 @@ export default class BoxFilters extends Component {
                             <form className="forms">
                                 <label className="label" htmlFor="versao">Versão: </label>
                                 <select className="select-css" name="versao">
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                    {
+                                        this.state.version ? this.state.version.map((version, index) => (
+                                            <option 
+                                                key={index}
+                                                value={version.ID}
+                                            >
+                                                {version.Name}
+                                            </option>
+                                        )) : null
+                                    }
                                 </select>
                             </form>
                         </div>
@@ -298,12 +356,20 @@ export default class BoxFilters extends Component {
                         </div>
                         <div>
                             <div>
-                                <span className="botao-limpar-filtros">Limpar Filtros</span>
-                                <button className="botao-ofertas">VER OFERTAS</button>
+                                <span 
+                                    className="botao-limpar-filtros"
+                                    onClick={this.cleanFilter}
+                                >Limpar Filtros</span>
+                                <button 
+                                    className="botao-ofertas"
+                                    onClick={this.handleVehicleComponent}
+                                >VER OFERTAS</button>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
+                <Vehicles mostrar={this.state.isVehicleComponentOpened}/>
             </div>
         )
     }
