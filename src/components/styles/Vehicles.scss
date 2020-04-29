@@ -1,0 +1,54 @@
+// medias
+$mobile-width: 320px;
+$maximum-width: 933px;
+$maximun-height: 312px;
+$fontSize: 14px;
+$fontColor: #808080;
+$redColor: rgb(199, 24, 24);
+
+@mixin mobile {
+  @media (min-width: 0px) and (max-width: #{$maximum-width}) {@content;}
+}
+
+@mixin desktop {
+  @media (min-width: #{$maximum-width + 1px}) {@content;}
+}
+
+@mixin vehiclesPage {
+  margin-top: 60px;
+  max-width: $maximum-width;
+  background-color: white;
+}
+
+@mixin titlePage {
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 30px;
+  margin-bottom: 30px;
+}
+
+@mixin vehicleProps {
+  padding-top: 30px;
+  margin-left: 20%;
+}
+
+@mixin vehicleImage {
+  border-radius: 20px;
+  width: 320px;
+  height: 280px;
+}
+
+@include mobile() {
+  .vehicles-page {@include vehiclesPage}
+  .title-page {@include titlePage()}
+  .vehicle-props {@include vehicleProps()}
+  .vehicle-image {@include vehicleImage()}
+}
+
+@include desktop() {
+  .vehicles-page {@include vehiclesPage}
+  .title-page {@include titlePage()}
+  .vehicle-props {@include vehicleProps()}
+  .vehicle-image {@include vehicleImage()}
+}

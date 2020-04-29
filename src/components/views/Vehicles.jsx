@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/Vehicles.scss';
 
 export default class Vehicles extends Component {
     constructor(props) {
@@ -27,8 +28,30 @@ export default class Vehicles extends Component {
             <div>
                 {
                     this.state.vehicles ? 
-                    <div>
-                        Mostra Veículos
+                    <div className="vehicles-page">
+                        <div className="title-page">Veículos encontrados: </div>
+                        {
+                            this.state.vehicles.map(vehicle => (
+                                <div className="vehicle-props">
+                                    <div>
+                                        <img 
+                                            className="vehicle-image"
+                                            src={vehicle.Image}
+                                            alt="imagem do veículo"
+                                        />
+                                    </div>
+                                    <br/><br/>
+                                    <div>Marca: {vehicle.Make}</div>
+                                    <div>Modelo: {vehicle.Model}</div>
+                                    <div>Versão: {vehicle.Version}</div>
+                                    <div>Km: {vehicle.KM}</div>
+                                    <div>Preço: {vehicle.Price}</div>
+                                    <div>Ano: {vehicle.YearModel}</div>
+                                    <div>Ano de Fabricação: {vehicle.YearFab}</div>
+                                    <div>Cor: {vehicle.Color}</div>
+                                </div>
+                            ))
+                        }
                     </div>
                     : null
                 }

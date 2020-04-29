@@ -17,7 +17,7 @@ export default class BoxFilters extends Component {
             opcao2: false,
             opcao3: false,
             opcao4: false,
-            localizacao: '',
+            localizacao: 'São Paulo',
             isVehicleComponentOpened: false,
             isOpened: false,
             selectedTab: 'CARROS',
@@ -255,14 +255,24 @@ export default class BoxFilters extends Component {
                                 <label className="label" htmlFor="ano">Ano Desejado: </label>
                                 <select className="select-css" name="ano">
                                     <option value="2020">2020</option>
-                                    <option value=""></option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2010">2010</option>
                                 </select>
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="preco">Faixa de preço: </label>
                                 <select className="select-css" name="preco">
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                    <option value="20_40">R$20 - 40 mil</option>
+                                    <option value="40_60">R$40 - 60 mil</option>
+                                    <option value="60_100">R$60 - 100 mil</option>
                                 </select>
                             </form>
                         </div>
@@ -312,9 +322,7 @@ export default class BoxFilters extends Component {
                                             onChange={this.handleInputCheckboxChange}
                                         />
                                         <label id="opcao1" htmlFor="opcao1_id" className="css-label lite-red-check">4 Portas</label>
-                                    </div>
 
-                                    <div className="opcoes-avancadas">
                                         <input
                                             id="opcao2_id" 
                                             className="css-checkbox"
@@ -335,10 +343,8 @@ export default class BoxFilters extends Component {
                                             checked={this.state.opcao3}
                                             onChange={this.handleInputCheckboxChange}
                                         />
-                                        <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Com ar condicionado</label>
-                                    </div>
+                                        <label id="opcao3" htmlFor="opcao3_id" className="css-label lite-red-check">Manual</label>
 
-                                    <div className="opcoes-avancadas">
                                         <input
                                             id="opcao4_id" 
                                             className="css-checkbox"
@@ -347,7 +353,7 @@ export default class BoxFilters extends Component {
                                             checked={this.state.opcao4}
                                             onChange={this.handleInputCheckboxChange}
                                         />
-                                        <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Sem ar condicionado</label>
+                                        <label id="opcao4" htmlFor="opcao4_id" className="css-label lite-red-check">Automático</label>
                                     </div>
                                 
                                 </div>

@@ -222,14 +222,13 @@ $colorBotaoVenda: #f7a500;
     color: $redColor;
 }
 
-@mixin opcoesAvacadasBox {
+@mixin opcoesAvancadasBox {
     margin-top: 10px;
 }
 
 @mixin opcoesAvancadas {
     margin-left: 15px;
 }
-
 @mixin buscaAvancadaLabel {
     font-size: $fontSize;
     font-weight: bold;
@@ -266,7 +265,7 @@ $colorBotaoVenda: #f7a500;
     .localizacao {@include localizacao()};
     .group-form-localizacao {@include groupFormLocalizacao()};
     .label {@include label()};
-    .opcoes-avancadas-box {@include opcoesAvacadasBox()};
+    .opcoes-avancadas-box {@include opcoesAvancadasBox()};
     .opcoes-avancadas {@include opcoesAvancadas()};
     .busca-avancada-label {@include buscaAvancadaLabel()};
     .fa-map-marker-alt {@include markerIcon()};
@@ -299,7 +298,7 @@ $colorBotaoVenda: #f7a500;
     .localizacao {@include localizacao()};
     .group-form-localizacao {@include groupFormLocalizacao()};
     .label {@include label()};
-    .opcoes-avancadas-box {@include opcoesAvacadasBox()};
+    .opcoes-avancadas-box {@include opcoesAvancadasBox()};
     .opcoes-avancadas {@include opcoesAvancadas()};
     .busca-avancada-label {@include buscaAvancadaLabel()};
     .fa-map-marker-alt {@include markerIcon()};
