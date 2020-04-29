@@ -2,7 +2,7 @@
 $mobile-width: 320px;
 $maximum-width: 933px;
 $maximun-height: 312px;
-$fontSize: 14px;
+$fontSize: 15px;
 $fontColor: #808080;
 $redColor: rgb(199, 24, 24);
 
@@ -15,7 +15,8 @@ $redColor: rgb(199, 24, 24);
 }
 
 @mixin vehiclesPage {
-  margin-top: 60px;
+  margin-top: 120px;
+  padding-top: 10px;
   max-width: $maximum-width;
   background-color: white;
 }
@@ -23,20 +24,45 @@ $redColor: rgb(199, 24, 24);
 @mixin titlePage {
   font-size: 22px;
   text-align: center;
-  font-weight: bold;
   padding-top: 30px;
-  margin-bottom: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
+  margin-left: 25%;
+  margin-right: 25%;
+  color: $fontColor;
+  background-color: #f0f0f0;
+  border-bottom: solid;
+  border-bottom-color: $redColor;
 }
 
 @mixin vehicleProps {
-  padding-top: 30px;
-  margin-left: 20%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 @mixin vehicleImage {
   border-radius: 20px;
-  width: 320px;
-  height: 280px;
+  width: 340px;
+  height: 260px;
+}
+
+@mixin propTitle {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  color: $fontColor;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: $fontSize;
+}
+
+@mixin propType {
+  font-weight: bold;
+  color: #404040;
+  text-align: right;
 }
 
 @include mobile() {
@@ -44,6 +70,8 @@ $redColor: rgb(199, 24, 24);
   .title-page {@include titlePage()}
   .vehicle-props {@include vehicleProps()}
   .vehicle-image {@include vehicleImage()}
+  .prop-title {@include propTitle()};
+  .prop-type {@include propType()};
 }
 
 @include desktop() {
@@ -51,4 +79,6 @@ $redColor: rgb(199, 24, 24);
   .title-page {@include titlePage()}
   .vehicle-props {@include vehicleProps()}
   .vehicle-image {@include vehicleImage()}
+  .prop-title {@include propTitle()};
+  .prop-type {@include propType()};
 }

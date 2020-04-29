@@ -1,5 +1,6 @@
 // medias
-$mobile-width: 320px;
+$mobile-width: 560px;
+$tablet-width: 720px;
 $maximum-width: 933px;
 $maximun-height: 312px;
 $fontSize: 14px;
@@ -8,11 +9,15 @@ $redColor: rgb(199, 24, 24);
 $colorBotaoVenda: #f7a500;
 
 @mixin mobile {
-  @media (min-width: 0px) and (max-width: #{$maximum-width}) {@content;}
+  @media (min-width: 0px) and (max-width: #{$mobile-width}) {@content;}
+}
+
+@mixin tablet {
+    @media (min-width: $mobile-width) and (max-width: #{$tablet-width}) {@content;}
 }
 
 @mixin desktop {
-  @media (min-width: #{$maximum-width + 1px}) {@content;}
+  @media (min-width: #{$tablet-width + 1px}) {@content;}
 }
 
 @mixin tabSelected {
@@ -87,6 +92,12 @@ $colorBotaoVenda: #f7a500;
 @mixin botaoVender {
     text-align: right;
     padding-bottom: 15px;
+}
+
+@mixin botaoVenderMobile {
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 190px;
 }
 
 @mixin venderMeuCarro {
@@ -248,6 +259,39 @@ $colorBotaoVenda: #f7a500;
     .comprar {@include comprarWord};
     .fa-car, .fa-motorcycle {@include icon};
     .tabs {@include tabs};
+    .botao-vender {@include botaoVenderMobile()};
+    .vender-meu-carro {@include venderMeuCarro()};  
+    .botao-ofertas {@include verOfertas()};
+    .botao-limpar-filtros {@include limparFiltros()};
+    .busca-avancada {@include buscaAvancada()};
+    .busca-icone {@include buscaIcone()};
+    .header {@include header};
+    .box {@include box};
+    .row {@include row};
+    .group-form {@include groupForm};
+    .first-row {@include firstRow()};
+    .forms {@include form};
+    .form-input {@include formInput()};
+    .form-first-row {@include formFirstRow()}
+    .localizacao {@include localizacao()};
+    .group-form-localizacao {@include groupFormLocalizacao()};
+    .label {@include label()};
+    .opcoes-avancadas-box {@include opcoesAvancadasBox()};
+    .opcoes-avancadas {@include opcoesAvancadas()};
+    .busca-avancada-label {@include buscaAvancadaLabel()};
+    .fa-map-marker-alt {@include markerIcon()};
+    input[type=text] {
+        font-weight: bold;
+    }
+}
+
+@include tablet() {
+    .tab {@include tab};
+    .tab-name {@include tabName};
+    .tab-selected {@include tabSelected()};
+    .comprar {@include comprarWord};
+    .fa-car, .fa-motorcycle {@include icon};
+    .tabs {@include tabs};
     .botao-vender {@include botaoVender()};
     .vender-meu-carro {@include venderMeuCarro()};
     .botao-ofertas {@include verOfertas()};
@@ -273,6 +317,8 @@ $colorBotaoVenda: #f7a500;
         font-weight: bold;
     }
 }
+
+
 
 @include desktop() {
     .tab {@include tab};

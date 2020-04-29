@@ -38,10 +38,10 @@ export default class Vehicles extends Component {
                 {
                     this.state.vehicles ? 
                     <div className="vehicles-page">
-                        <div className="title-page">Veículos encontrados: </div>
+                        <div className="title-page">VEÍCULOS ENCONTRADOS: </div>
                         {
-                            this.state.vehicles.map(vehicle => (
-                                <div className="vehicle-props">
+                            this.state.vehicles.map((vehicle, index) => (
+                                <div key={index} className="vehicle-props">
                                     <div>
                                         <img 
                                             className="vehicle-image"
@@ -50,14 +50,39 @@ export default class Vehicles extends Component {
                                         />
                                     </div>
                                     <br/><br/>
-                                    <div>Marca: {vehicle.Make}</div>
-                                    <div>Modelo: {vehicle.Model}</div>
-                                    <div>Versão: {vehicle.Version}</div>
-                                    <div>Km: {vehicle.KM}</div>
-                                    <div>Preço: {vehicle.Price}</div>
-                                    <div>Ano: {vehicle.YearModel}</div>
-                                    <div>Ano de Fabricação: {vehicle.YearFab}</div>
-                                    <div>Cor: {vehicle.Color}</div>
+                                    <div className="prop-title">
+                                        <span>Marca:</span>
+                                        <span className="prop-type" >{vehicle.Make}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Modelo: </span>
+                                        <span className="prop-type" >{vehicle.Model}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Versão: </span>
+                                        <span className="prop-type" >{vehicle.Version}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Km: </span>
+                                        <span className="prop-type" >{vehicle.KM}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Preço: </span>
+                                        <span className="prop-type" >{`R$${vehicle.Price}`}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Ano: </span>
+                                        <span className="prop-type" >{vehicle.YearModel}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Ano de Fabricação: </span>
+                                        <span className="prop-type" >{vehicle.YearFab}</span>
+                                    </div>
+                                    <div className="prop-title">
+                                        <span>Cor: </span>
+                                        <span className="prop-type" >{vehicle.Color}</span>
+                                    </div>
+                                    <hr style={{width: "80%"}} />
                                 </div>
                             ))
                         }
