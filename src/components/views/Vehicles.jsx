@@ -17,10 +17,15 @@ export default class Vehicles extends Component {
     constructor(props) {
         super(props)
         this.buildVehiclesPage = this.buildVehiclesPage.bind(this)
+        this.buildFilter = this.buildFilter.bind(this);
     }
 
     componentDidMount() {
         this.buildVehiclesPage();
+    }
+
+    buildFilter() {
+
     }
 
     buildVehiclesPage() {
@@ -32,15 +37,15 @@ export default class Vehicles extends Component {
     }
     
     render() {
+        console.log([this.props.make, this.props.model, this.props.version, this.props.price]);
         return (
             this.props.mostrar ?
             <div>
-                {
-                    this.state.vehicles ? 
                     <div className="vehicles-page">
                         <div className="title-page">VEÍCULOS ENCONTRADOS: </div>
                         {
                             this.state.vehicles.map((vehicle, index) => (
+                                this.state.vehicles ?
                                 <div key={index} className="vehicle-props">
                                     <div>
                                         <img 
@@ -68,7 +73,7 @@ export default class Vehicles extends Component {
                                     </div>
                                     <div className="prop-title">
                                         <span>Preço: </span>
-                                        <span className="prop-type" >{`R$${vehicle.Price}`}</span>
+                                        <span className="prop-type" >{`R$ ${vehicle.Price}`}</span>
                                     </div>
                                     <div className="prop-title">
                                         <span>Ano: </span>
@@ -83,12 +88,14 @@ export default class Vehicles extends Component {
                                         <span className="prop-type" >{vehicle.Color}</span>
                                     </div>
                                     <hr style={{width: "80%"}} />
+                                </div> :
+
+                                <div>
+                                    Nenhum veículo encontrado. Por favor, refaça os filtros...
                                 </div>
                             ))
                         }
                     </div>
-                    : null
-                }
             </div>
             : null
         )

@@ -23,7 +23,12 @@ export default class BoxFilters extends Component {
             selectedTab: 'CARROS',
             make: [{ ID: 'Todos', Name: 'Todos'}],
             model: [{ ID: 'Todos', Name: 'Todos' }],
-            version: [{ ID: 'Todas', Name: 'Todas' }]
+            version: [{ ID: 'Todas', Name: 'Todas' }],
+            makeOption: '',
+            modelOption: '',
+            versionOption: '',
+            yearOption: '',
+            priceOption: ''
         }
 
         this.getOptionsMake = this.getOptionsMake.bind(this);
@@ -36,6 +41,7 @@ export default class BoxFilters extends Component {
         this.handleHideShowButton = this.handleHideShowButton.bind(this);
         this.handleSelectedTab = this.handleSelectedTab.bind(this);
         this.handleVehicleComponent = this.handleVehicleComponent.bind(this);
+        this.setOptionsFilter = this.setOptionsFilter.bind(this);
     }
 
     componentDidMount() {
@@ -119,6 +125,30 @@ export default class BoxFilters extends Component {
                 .then(data => this.setState({ make: data }))
             )
             .catch((error) => console.log(error))
+    }
+
+    setOptionsFilter() {
+        /** Get selected make option */ 
+        let make = document.getElementById('marca');
+        let makeOption = make.options[make.selectedIndex].text;
+        
+        /** Get selected model option */
+        let model = document.getElementById('modelo');
+        let modelOption = model.options[model.selectedIndex].text;
+
+        /** Get selected version option */
+        let version = document.getElementById('versao');
+        let versionOption = version.options[version.selectedIndex].text;
+
+        /** Get selected price option */
+        let price = document.getElementById('preco');
+        let priceOption = price.options[price.selectedIndex].value;
+
+        /** Get selected year option */
+        let year = document.getElementById('ano');
+        let yearOption = year.options[year.selectedIndex].value;
+
+        this.setState({ makeOption, modelOption, versionOption, priceOption, yearOption })
     }
 
     render() {
@@ -212,7 +242,7 @@ export default class BoxFilters extends Component {
                                 <label className="label" htmlFor="marca">Marca: </label>
                                 <select 
                                     className="select-css"
-                                    name="marca"
+                                    id="marca"
                                     onChange={(e) => this.handleSelectedMake(e.target.value)}
                                 >
                                     {
@@ -231,7 +261,7 @@ export default class BoxFilters extends Component {
                                 <label className="label" htmlFor="modelo">Modelo: </label >
                                 <select 
                                     className="select-css"
-                                    name="modelo"
+                                    id="modelo"
                                     onChange={(e) => this.handleSelectedModel(e.target.value)}
                                 >
                                     {
@@ -239,6 +269,7 @@ export default class BoxFilters extends Component {
                                             <option 
                                                 key={index}
                                                 value={model.ID}
+                                                name={model.Name}
                                             >
                                                 {model.Name}
                                             </option>
@@ -253,7 +284,7 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="ano">Ano Desejado: </label>
-                                <select className="select-css" name="ano">
+                                <select id="ano" className="select-css" name="ano">
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
                                     <option value="2018">2018</option>
@@ -265,26 +296,27 @@ export default class BoxFilters extends Component {
                                     <option value="2012">2012</option>
                                     <option value="2011">2011</option>
                                     <option value="2010">2010</option>
-                                </select>
+                                </select> 
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="preco">Faixa de preço: </label>
-                                <select className="select-css" name="preco">
-                                    <option value="20_40">R$20 - 40 mil</option>
-                                    <option value="40_60">R$40 - 60 mil</option>
-                                    <option value="60_100">R$60 - 100 mil</option>
+                                <select id="preco" className="select-css" name="preco">
+                                    <option  value="20_40">R$20 - 40 mil</option>
+                                    <option  value="40_60">R$40 - 60 mil</option>
+                                    <option  value="60_100">R$60 - 100 mil</option>
                                 </select>
                             </form>
                         </div>
                         <div>
                             <form className="forms">
                                 <label className="label" htmlFor="versao">Versão: </label>
-                                <select className="select-css" name="versao">
+                                <select id="versao" className="select-css">
                                     {
                                         this.state.version ? this.state.version.map((version, index) => (
                                             <option 
                                                 key={index}
                                                 value={version.ID}
+                                                name={version.name}
                                             >
                                                 {version.Name}
                                             </option>
@@ -368,14 +400,26 @@ export default class BoxFilters extends Component {
                                 >Limpar Filtros</span>
                                 <button 
                                     className="botao-ofertas"
-                                    onClick={this.handleVehicleComponent}
+                                    onClick={
+                                        () => {
+                                            this.handleVehicleComponent()
+                                            this.setOptionsFilter()
+                                        }
+                                    }
                                 >VER OFERTAS</button>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
-                <Vehicles mostrar={this.state.isVehicleComponentOpened}/>
+                <Vehicles 
+                    mostrar={this.state.isVehicleComponentOpened}
+                    make={this.state.makeOption}
+                    model={this.state.modelOption}
+                    version={this.state.versionOption}
+                    year={this.state.yearOption}
+                    price={this.state.priceOption}
+                />
             </div>
         )
     }
