@@ -3,7 +3,7 @@ import '../styles/BoxFilter.scss';
 import { tabs } from '../data/local/tabs';
 import '../../assets/css/checkbox.css';
 import '../../assets/css/select.css';
-import Vehicles from '../views/Vehicles';
+import { Vehicles } from '../views/Vehicles';
 
 export default class BoxFilters extends Component {
 
@@ -18,17 +18,16 @@ export default class BoxFilters extends Component {
             opcao3: false,
             opcao4: false,
             localizacao: 'São Paulo',
-            isVehicleComponentOpened: false,
             isOpened: false,
             selectedTab: 'CARROS',
-            make: [{ ID: 'Todos', Name: 'Todos'}],
+            make: [{ ID: 'Todas', Name: 'Todas'}],
             model: [{ ID: 'Todos', Name: 'Todos' }],
             version: [{ ID: 'Todas', Name: 'Todas' }],
+            vehicles: [],
+            vehiclesFiltered: [],
             makeOption: '',
             modelOption: '',
-            versionOption: '',
-            yearOption: '',
-            priceOption: ''
+            versionOption: ''
         }
 
         this.getOptionsMake = this.getOptionsMake.bind(this);
@@ -40,14 +39,18 @@ export default class BoxFilters extends Component {
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleHideShowButton = this.handleHideShowButton.bind(this);
         this.handleSelectedTab = this.handleSelectedTab.bind(this);
-        this.handleVehicleComponent = this.handleVehicleComponent.bind(this);
         this.setOptionsFilter = this.setOptionsFilter.bind(this);
+        this.filterVehicles = this.filterVehicles.bind(this);
+        this.loadingResults = this.loadingResults.bind(this);
+        this.buildVehiclesPage = this.buildVehiclesPage.bind(this);
     }
 
     componentDidMount() {
         this.getOptionsMake();
+        this.buildVehiclesPage();
         this.handleSelectedMake(this.props.initialMakeOption);
         this.handleSelectedModel(this.props.initialMakeOption);
+        this.loadingResults();
     }
 
     handleInputCheckboxChange(event) {
@@ -92,6 +95,7 @@ export default class BoxFilters extends Component {
     cleanFilter() {
         this.getOptionsMake();
         this.setState({
+            make: [{ ID: 'Todas', Name: 'Todas'}],
             model: [{ ID: 'Todos', Name: 'Todos' }],
             version: [{ ID: 'Todas', Name: 'Todas' }]
         })
@@ -113,12 +117,6 @@ export default class BoxFilters extends Component {
             .catch((error) => console.log(error))
     }
 
-    handleVehicleComponent() {
-        this.setState({
-            isVehicleComponentOpened: true
-        })
-    }
-
     getOptionsMake() {
         fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make')
             .then((res) => res.json()
@@ -127,28 +125,46 @@ export default class BoxFilters extends Component {
             .catch((error) => console.log(error))
     }
 
+    buildVehiclesPage() {
+        fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1')
+            .then((res) => res.json()
+                .then(data => this.setState({ vehicles: data, vehiclesFiltered: data }))
+            )
+            .catch((error) => console.log(error))
+    }
+
+    loadingResults() {
+        this.setOptionsFilter();
+        this.setState({
+            vehiclesFiltered: this.filterVehicles()
+        })
+    }
+
     setOptionsFilter() {
-        /** Get selected make option */ 
+        /** Get selected make option */
         let make = document.getElementById('marca');
         let makeOption = make.options[make.selectedIndex].text;
-        
         /** Get selected model option */
         let model = document.getElementById('modelo');
         let modelOption = model.options[model.selectedIndex].text;
-
         /** Get selected version option */
         let version = document.getElementById('versao');
         let versionOption = version.options[version.selectedIndex].text;
 
-        /** Get selected price option */
-        let price = document.getElementById('preco');
-        let priceOption = price.options[price.selectedIndex].value;
+        this.setState({ makeOption, modelOption, versionOption })
+    }
 
-        /** Get selected year option */
-        let year = document.getElementById('ano');
-        let yearOption = year.options[year.selectedIndex].value;
+    filterVehicles() {
+        const { makeOption, modelOption, versionOption } = this.state;
+        
+        let vehiclesFiltered = this.state.vehicles;
 
-        this.setState({ makeOption, modelOption, versionOption, priceOption, yearOption })
+        if (!(makeOption === 'Todas' && modelOption === 'Todos' && versionOption === 'Todas')) {
+            vehiclesFiltered = vehiclesFiltered.filter(vehicle => {
+                return (makeOption === vehicle.Make && modelOption === vehicle.Model && versionOption === vehicle.Version)
+            })
+        }
+        return vehiclesFiltered;
     }
 
     render() {
@@ -284,7 +300,7 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="ano">Ano Desejado: </label>
-                                <select id="ano" className="select-css" name="ano">
+                                <select id="anoDesejado" className="select-css" name="ano">
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
                                     <option value="2018">2018</option>
@@ -400,25 +416,15 @@ export default class BoxFilters extends Component {
                                 >Limpar Filtros</span>
                                 <button 
                                     className="botao-ofertas"
-                                    onClick={
-                                        () => {
-                                            this.handleVehicleComponent()
-                                            this.setOptionsFilter()
-                                        }
-                                    }
+                                    onClick={this.loadingResults}
                                 >VER OFERTAS</button>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
-                <Vehicles 
-                    mostrar={this.state.isVehicleComponentOpened}
-                    make={this.state.makeOption}
-                    model={this.state.modelOption}
-                    version={this.state.versionOption}
-                    year={this.state.yearOption}
-                    price={this.state.priceOption}
+                <Vehicles
+                    vehiclesFiltered={this.state.vehiclesFiltered}
                 />
             </div>
         )

@@ -65,6 +65,13 @@ $redColor: rgb(199, 24, 24);
   text-align: right;
 }
 
+@mixin emptyFilter {
+  text-align: center;
+  color: $fontColor;
+  font-size: $fontSize;
+  padding-bottom: 20px;
+}
+
 @include mobile() {
   .vehicles-page {@include vehiclesPage}
   .title-page {@include titlePage()}
@@ -72,6 +79,7 @@ $redColor: rgb(199, 24, 24);
   .vehicle-image {@include vehicleImage()}
   .prop-title {@include propTitle()};
   .prop-type {@include propType()};
+  .empty-filter {@include emptyFilter()};
 }
 
 @include desktop() {
@@ -81,4 +89,5 @@ $redColor: rgb(199, 24, 24);
   .vehicle-image {@include vehicleImage()}
   .prop-title {@include propTitle()};
   .prop-type {@include propType()};
+  .empty-filter {@include emptyFilter()};
 }
