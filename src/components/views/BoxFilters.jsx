@@ -39,9 +39,7 @@ export default class BoxFilters extends Component {
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleHideShowButton = this.handleHideShowButton.bind(this);
         this.handleSelectedTab = this.handleSelectedTab.bind(this);
-        this.setOptionsFilter = this.setOptionsFilter.bind(this);
         this.filterVehicles = this.filterVehicles.bind(this);
-        this.loadingResults = this.loadingResults.bind(this);
         this.buildVehiclesPage = this.buildVehiclesPage.bind(this);
     }
 
@@ -50,7 +48,6 @@ export default class BoxFilters extends Component {
         this.buildVehiclesPage();
         this.handleSelectedMake(this.props.initialMakeOption);
         this.handleSelectedModel(this.props.initialMakeOption);
-        this.loadingResults();
     }
 
     handleInputCheckboxChange(event) {
@@ -99,6 +96,21 @@ export default class BoxFilters extends Component {
             model: [{ ID: 'Todos', Name: 'Todos' }],
             version: [{ ID: 'Todas', Name: 'Todas' }]
         })
+        /** Get selected ano option */
+        let anoDesejado = document.getElementById('anoDesejado');
+        anoDesejado.value = "Todos";
+        
+        
+        /** Get selected preco option */
+        let preco = document.getElementById('preco');
+        preco.value = "Todas";
+        
+        
+        /** Get selected raio option */
+        let raio = document.getElementById('raio');
+        raio.value = "Qualquer";
+        
+        
     }
 
     handleSelectedModel(modelId) {
@@ -128,19 +140,12 @@ export default class BoxFilters extends Component {
     buildVehiclesPage() {
         fetch('http://desafioonline.webmotors.com.br/api/OnlineChallenge/Vehicles?Page=1')
             .then((res) => res.json()
-                .then(data => this.setState({ vehicles: data, vehiclesFiltered: data }))
+                .then(data => this.setState({ vehicles: data }))
             )
             .catch((error) => console.log(error))
     }
 
-    loadingResults() {
-        this.setOptionsFilter();
-        this.setState({
-            vehiclesFiltered: this.filterVehicles()
-        })
-    }
-
-    setOptionsFilter() {
+    filterVehicles() {
         /** Get selected make option */
         let make = document.getElementById('marca');
         let makeOption = make.options[make.selectedIndex].text;
@@ -152,19 +157,15 @@ export default class BoxFilters extends Component {
         let versionOption = version.options[version.selectedIndex].text;
 
         this.setState({ makeOption, modelOption, versionOption })
-    }
 
-    filterVehicles() {
-        const { makeOption, modelOption, versionOption } = this.state;
-        
-        let vehiclesFiltered = this.state.vehicles;
+        let vehiclesFiltered = [...this.state.vehicles];
 
         if (!(makeOption === 'Todas' && modelOption === 'Todos' && versionOption === 'Todas')) {
             vehiclesFiltered = vehiclesFiltered.filter(vehicle => {
                 return (makeOption === vehicle.Make && modelOption === vehicle.Model && versionOption === vehicle.Version)
             })
         }
-        return vehiclesFiltered;
+        this.setState({ vehiclesFiltered: vehiclesFiltered })
     }
 
     render() {
@@ -243,13 +244,14 @@ export default class BoxFilters extends Component {
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="raio">Raio: </label>
-                                <select className="select-css" name="raio" defaultValue="100">
+                                <select id="raio" className="select-css" name="raio" defaultValue="Qualquer">
                                     <option value="10">10km</option>
                                     <option value="20">20km</option>
                                     <option value="30">30km</option>
                                     <option value="40">40km</option>
                                     <option value="50">50km</option>
                                     <option value="100">100km</option>
+                                    <option value="Qualquer"> -- </option>
                                 </select>
                             </form>
                         </div>
@@ -260,7 +262,11 @@ export default class BoxFilters extends Component {
                                     className="select-css"
                                     id="marca"
                                     onChange={(e) => this.handleSelectedMake(e.target.value)}
+                                    defaultValue="Todas"
                                 >
+                                    <option value="Todas">
+                                        Todas
+                                    </option>
                                     {
                                         this.state.make ? this.state.make.map((make, index) => (
                                             <option 
@@ -269,7 +275,9 @@ export default class BoxFilters extends Component {
                                             >
                                                 {make.Name}
                                             </option>
-                                        )) : null
+                                        ))
+                                        :
+                                        null
                                     }
                                 </select>
                             </form>
@@ -279,13 +287,16 @@ export default class BoxFilters extends Component {
                                     className="select-css"
                                     id="modelo"
                                     onChange={(e) => this.handleSelectedModel(e.target.value)}
+                                    defaultValue="Todos"
                                 >
+                                    <option value="Todos">
+                                        Todos
+                                    </option>
                                     {
                                         this.state.model ? this.state.model.map((model, index) => (
                                             <option 
                                                 key={index}
                                                 value={model.ID}
-                                                name={model.Name}
                                             >
                                                 {model.Name}
                                             </option>
@@ -300,7 +311,7 @@ export default class BoxFilters extends Component {
                         <div className="group-form">
                             <form className="forms">
                                 <label className="label" htmlFor="ano">Ano Desejado: </label>
-                                <select id="anoDesejado" className="select-css" name="ano">
+                                <select id="anoDesejado" className="select-css" name="ano" defaultValue="Todos">
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
                                     <option value="2018">2018</option>
@@ -312,21 +323,26 @@ export default class BoxFilters extends Component {
                                     <option value="2012">2012</option>
                                     <option value="2011">2011</option>
                                     <option value="2010">2010</option>
+                                    <option value="Todos">Todos</option>
                                 </select> 
                             </form>
                             <form className="forms">
                                 <label className="label" htmlFor="preco">Faixa de preço: </label>
-                                <select id="preco" className="select-css" name="preco">
+                                <select id="preco" className="select-css" name="preco" defaultValue="Todas">
                                     <option  value="20_40">R$20 - 40 mil</option>
                                     <option  value="40_60">R$40 - 60 mil</option>
                                     <option  value="60_100">R$60 - 100 mil</option>
+                                    <option  value="Todas">Todas</option>
                                 </select>
                             </form>
                         </div>
                         <div>
                             <form className="forms">
                                 <label className="label" htmlFor="versao">Versão: </label>
-                                <select id="versao" className="select-css">
+                                <select id="versao" className="select-css" defaultValue="Todas">
+                                    <option value="Todas">
+                                        Todas
+                                    </option>
                                     {
                                         this.state.version ? this.state.version.map((version, index) => (
                                             <option 
@@ -416,7 +432,7 @@ export default class BoxFilters extends Component {
                                 >Limpar Filtros</span>
                                 <button 
                                     className="botao-ofertas"
-                                    onClick={this.loadingResults}
+                                    onClick={this.filterVehicles}
                                 >VER OFERTAS</button>
                                 
                             </div>

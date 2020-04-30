@@ -2,7 +2,6 @@ import React from 'react';
 import '../styles/Vehicles.scss';
 
 export const Vehicles = (props) => {
-    console.log(props.vehiclesFiltered)
     return (
         <div>
             <div className="vehicles-page">
